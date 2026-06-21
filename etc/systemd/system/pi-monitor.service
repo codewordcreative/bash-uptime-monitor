@@ -1,0 +1,8 @@
+[Unit]
+Description=Pi Monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/pi-monitor/pi-monitor.sh critical
