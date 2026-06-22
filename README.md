@@ -16,6 +16,20 @@ I didn't want or need minute-by-minute checking for the kind of sites on my serv
 
 `/usr/sbin/sendmail` - not installed by default, but required to send email alerts. You'll need a mail transfer agent (e.g. `msmtp`, `postfix`, `exim4`) configured separately to provide this. If it's missing or misconfigured, the script won't error loudly - failed sends are logged to `failures.log` as `MAIL_FAIL`, so check there if alerts seem to have stopped arriving.
 
+## Note regarding immutable distros/unwriteable directories
+The default folders used work fine for Debian-based distros. If you have issues with those folders not being writeable for you, you can put everything in a folder of your choosing and correct the references with one or two small edits to the script file:
+By default, it says:
+`BASE_DIR="/opt/pi-monitor"
+ENV_FILE="$BASE_DIR/pi-monitor.env"
+STATE_FILE="$BASE_DIR/state.env"
+STATE_LOCK_FILE="$BASE_DIR/state.lock"
+FAIL_LOG="$BASE_DIR/failures.log"
+RUN_LOCK_FILE="/var/lock/pi-monitor.lock`
+All locations except the lock file are computed from the `BASE_DIR` at the top. Change that to something writeable, and you're good. For example:
+`BASE_DIR="/home/user/pi-monitor"`
+As for the lock file, that's more likely to be writeable in its conventional location. But if you have trouble or want to play safe, you can set that to use the `BASE_DIR`, too, so it's in the same directory as the rest. For example:
+`RUN_LOCK_FILE="$BASE_DIR/pi-monitor.lock"`
+
 ## User agent
 
 It uses a custom user agent, `CodewordMonitor/1.0`, to allow whitelisting and avoid common blacklisting setups. Raspberry Pis and bare `curl`/bash user agents are both somewhat likely to get flagged by default firewall rules or bot protection.
