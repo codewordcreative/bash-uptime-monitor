@@ -88,7 +88,7 @@ This checks every entry in both `CRITICAL_CHECKS` and `HOURLY_CHECKS`, and alway
    sudo systemctl status pi-monitor.service
    sudo systemctl status pi-monitor-hourly.service
    ```
-   Since these are `Type=oneshot` services, they're expected to show `inactive (dead)` shortly after running - that is normal and not an error. You're looking for `status=0/SUCCESS` on the last run. It will look something like:
+   Since these are `Type=oneshot` services, they're expected to show `inactive (dead)` shortly after running - that is normal and not an error. You're looking for `status=0/SUCCESS` on the last run, on the `Main PID` line about halfway through. It will look something like this example, showing the hourly result:
    ```
    ○ pi-monitor-hourly.service - Pi Monitor (hourly)
         Loaded: loaded (/etc/systemd/system/pi-monitor-hourly.service; static)
